@@ -1,0 +1,22 @@
+server:
+  port: 8090
+
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRESS_URL:localhost:111}/kuber-demo
+    username: ${POSTGRESS_USERNAME:postgres}
+    password: ${POSTGRESS_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+logging:
+  level:
+    org:
+      hibernate:
+        sql: DEBUG
+        type: TRACE
