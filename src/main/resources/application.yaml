@@ -3,7 +3,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://${POSTGRESS_URL:localhost:111}/kuber-demo
+    url: jdbc:postgresql://${POSTGRESS_HOST:localhost}:${POSTGRES_PORT:5432}/kuber-demo
     username: ${POSTGRESS_USERNAME:postgres}
     password: ${POSTGRESS_PASSWORD:postgres}
   jpa:
