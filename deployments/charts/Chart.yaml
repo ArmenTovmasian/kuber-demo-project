@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: "1.0"
+description: A Helm chart for the kuber-demo-project application
+name: kuber-demo-project
+version: 0.0.1
+

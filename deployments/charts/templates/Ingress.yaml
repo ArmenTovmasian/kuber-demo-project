@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kuber-demo-ingress
+  labels:
+    name: { { .Values.SERVICE_NAME } }
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: kuber-demo-service
+              servicePort: 8090

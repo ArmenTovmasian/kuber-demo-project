@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: kuber-demo-service
+  labels:
+    name: {{ .Values.SERVICE_NAME}}
+spec:
+  ports:
+    -   name: web
+        port: 8090
+        targetPort: 8090
+  type: ClusterIP
+  selector:
+    name: {{ .Values.SERVICE_NAME}}

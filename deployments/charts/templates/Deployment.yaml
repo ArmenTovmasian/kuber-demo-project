@@ -1,0 +1,54 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: kuber-demo-deployment
+  labels:
+    name: {{ .Values.SERVICE_NAME}}
+spec:
+  replicas: {{ .Values.KUBERNETES_NUMBER_OF_PODS }}
+  selector:
+    matchLabels:
+      name: {{ .Values.SERVICE_NAME}}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.SERVICE_NAME}}
+    spec:
+      containers:
+        - name: kuber-demo-container
+          image: armentovmasyan/kuber-demo-deployment:latest
+          ports:
+            - containerPort: 8090
+        - env:
+            - name: POSTGRESS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgres.username
+            - name: POSTGRESS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: postgres.password
+            - name: POSTGRESS_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-configMap
+                  key: posrgres_host
+            - name: POSTGRESS_PORT
+                valueFrom:
+                  configMapKeyRef:
+                    name: postgres-configMap
+                    key: posrgres_port
+        readinessProbe:
+          httpGet:
+            path: /api/v1/checkStatus
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 20
+          failureThreshold: 5
+          livenessProbe:
+            httpGet:
+              path: /api/v1/checkStatus
+              port: http
+            initialDelaySeconds: 100
